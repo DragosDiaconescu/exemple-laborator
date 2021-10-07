@@ -7,27 +7,27 @@ using System.Threading.Tasks;
 
 namespace Exemple.Domain
 {
-    public record StudentRegistrationNumber
+    public record ProductCode
     {
-        private static readonly Regex ValidPattern = new("^LM[0-9]{5}$");
+        private static readonly Regex ValidPattern = new("[1-9]");
 
-        public string Value { get; }
+        public string Code { get; }
 
-        private StudentRegistrationNumber(string value)
+        private ProductCode(string value)
         {
             if (ValidPattern.IsMatch(value))
             {
-                Value = value;
+                Code = value;
             }
             else
             {
-                throw new InvalidStudentRegistrationNumberException("");
+                throw new InvalidProductCodeException("");
             }
         }
 
         public override string ToString()
         {
-            return Value;
+            return Code;
         }
     }
 }

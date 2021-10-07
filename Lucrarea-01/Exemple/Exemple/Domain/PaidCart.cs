@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace Exemple.Domain
 {
-    public record UnvalidatedStudentGrade(string StudentRegistrationNumber, string Grade);
+    public record PaidCart(string Quantity, string Code, string Address);
 }
