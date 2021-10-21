@@ -1,9 +1,7 @@
-﻿using Exemple.Domain.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using static Exemple.Domain.Models.ExamGrades;
-using static Exemple.Domain.ExamGradesOperation;
 using Exemple.Domain;
+using static Exemple.Domain.ShoppingCart;
 
 namespace Exemple
 {
@@ -13,20 +11,20 @@ namespace Exemple
 
         static void Main(string[] args)
         {
-            var listOfGrades = ReadListOfGrades().ToArray();
-            PublishGradesCommand command = new(listOfGrades);
-            PublishGradeWorkflow workflow = new PublishGradeWorkflow();
-            var result = workflow.Execute(command, (registrationNumber) => true);
+            var listOfGrades = ReadListOfShoppingCarts().ToArray();
+            ShoppingCartCommand command = new(listOfGrades);
+            PayShoppingCartWorkflow workflow = new PayShoppingCartWorkflow();
+            var result = workflow.Execute(command, (productCode) => true);
 
             result.Match(
-                    whenExamGradesPublishFaildEvent: @event =>
+                    whenShoppingCartsPaidFailedEvent: @event =>
                     {
-                        Console.WriteLine($"Publish failed: {@event.Reason}");
+                        Console.WriteLine($"Plata esuata: {@event.Reason}");
                         return @event;
                     },
-                    whenExamGradesPublishScucceededEvent: @event =>
+                    whenShoppingCartsPaidScucceededEvent: @event =>
                     {
-                        Console.WriteLine($"Publish succeeded.");
+                        Console.WriteLine($"Plata reusita !");
                         Console.WriteLine(@event.Csv);
                         return @event;
                     }
@@ -35,33 +33,38 @@ namespace Exemple
             Console.WriteLine("Hello World!");
         }
 
-        private static List<UnvalidatedStudentGrade> ReadListOfGrades()
+        private static List<EmptyCart> ReadListOfShoppingCarts()
         {
-            List <UnvalidatedStudentGrade> listOfGrades = new();
+            List<EmptyCart> listOfShoppingCarts = new();
             do
             {
-                //read registration number and grade and create a list of greads
-                var registrationNumber = ReadValue("Registration Number: ");
-                if (string.IsNullOrEmpty(registrationNumber))
+                var quantity = ReadValue("Cantitatea produsului comandat: ");
+                if (string.IsNullOrEmpty(quantity))
                 {
                     break;
                 }
 
-                var examGrade = ReadValue("Exam Grade: ");
-                if (string.IsNullOrEmpty(examGrade))
+                var product_code = ReadValue("Codul produsului: ");
+                if (string.IsNullOrEmpty(product_code))
                 {
                     break;
                 }
 
-                var activityGrade = ReadValue("Activity Grade: ");
-                if (string.IsNullOrEmpty(activityGrade))
+                var address = ReadValue("Adresa: ");
+                if (string.IsNullOrEmpty(address))
                 {
                     break;
                 }
 
-                listOfGrades.Add(new (registrationNumber, examGrade, activityGrade));
+                var price = ReadValue("Pretul: ");
+                if (string.IsNullOrEmpty(price))
+                {
+                    break;
+                }
+
+                listOfShoppingCarts.Add(new(product_code, quantity, address, price));
             } while (true);
-            return listOfGrades;
+            return listOfShoppingCarts;
         }
 
         private static string? ReadValue(string prompt)
