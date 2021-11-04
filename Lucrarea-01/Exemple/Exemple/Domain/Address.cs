@@ -9,7 +9,7 @@ namespace Exemple.Domain
 {
     class Address
     {
-        private static readonly Regex ValidPattern = new("{str}");
+        private static readonly Regex ValidPattern = new("{strada}");
 
         public string _address { get; }
 

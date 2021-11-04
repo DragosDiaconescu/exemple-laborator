@@ -21,7 +21,7 @@ namespace Exemple.Domain
                 whenValidatedCarts: validatedResult => PayShoppingCart(validatedResult)
             );
 
-            Console.WriteLine("Introduceti inca un set de date !");
+            Console.WriteLine("Greseala, introduceti inca un set de date !");
         }
 
         private static List<EmptyCart> ReadListOfShoppingCarts()

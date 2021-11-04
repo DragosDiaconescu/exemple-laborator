@@ -30,7 +30,7 @@ namespace Exemple
                     }
                 );
 
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Adaugati un nou set de date !");
         }
 
         private static List<EmptyCart> ReadListOfShoppingCarts()
