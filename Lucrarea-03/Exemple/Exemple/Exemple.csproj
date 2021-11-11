@@ -8,10 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="CSharp.Choices" Version="2.0.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Exemple.Domain\Exemple.Domain.csproj" />
+    <PackageReference Include="LanguageExt.Core" Version="4.0.3" />
   </ItemGroup>
   
 </Project>
